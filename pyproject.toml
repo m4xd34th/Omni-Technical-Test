@@ -1,0 +1,11 @@
+[tool.black]
+line-length = 88
+target-version = ['py37']
+include = '\.pyi?$'
+exclude = '''
+/(
+  | migrations
+  | __init__.py
+)/
+
+'''

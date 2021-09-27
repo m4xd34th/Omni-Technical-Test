@@ -1,0 +1,39 @@
+version: "3.7"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: .docker/backend.Dockerfile
+    command: shell
+    environment:
+      - DEBUG=${DEBUG:-True}
+      - APP_LOGGING_LEVEL=${APP_LOGGING_LEVEL:-INFO}
+      - DB_LOGGING_LEVEL=${DB_LOGGING_LEVEL:-INFO}
+      - DJANGO_SETTINGS_MODULE=technical_test.settings
+      - APP=technical_test
+      - QUEUES=celery
+      - PYTHONDONTWRITEBYTECODE=1
+      - BROWSABLE_API_RENDERER=true
+      # forwarded from the host if they exist
+      - UPDATE_PYTHON_REQUIREMENTS_ON_CONTAINERSTART
+    volumes:
+      - .:/opt/omni/technical-test
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: circleci/postgres:12.3-postgis
+    volumes:
+      - postgres123-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres123-data: {}
