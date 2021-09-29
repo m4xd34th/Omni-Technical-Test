@@ -1,9 +1,15 @@
+import json
+
 from django.test import TestCase
+from rest_framework import status
+from rest_framework.test import APIClient
 
 from store.models import Client, Order, Payment, Product, Shipment
 
 
 class ModelsTest(TestCase):
+    client = APIClient()
+
     @classmethod
     def setUpTestData(cls):
         # Set up non-modified objects used by all test methods
@@ -22,7 +28,9 @@ class ModelsTest(TestCase):
         product2 = Product.objects.create(name="Coffee Maker", quantity=5, value=110000)
         product2.save()
 
-        shipment = Shipment.objects.create(address="Calle 33 # 8A - 29, Brr Santa Clara")
+        shipment = Shipment.objects.create(
+            address="Calle 33 # 8A - 29, Brr Santa Clara"
+        )
         shipment.save()
 
         order = Order.objects.create(
@@ -98,3 +106,40 @@ class ModelsTest(TestCase):
         payment = Payment.objects.get(id=1)
         expected_object_name = f"Payment method {payment.medium}"
         self.assertEqual(expected_object_name, str(payment))
+
+    # def test_api_client_creation_without_login(self):
+    #     response = self.client.post(
+    #         "/api/v1/store/client/",
+    #         {
+    #             "full_name": "Test Client",
+    #             "username": "testing",
+    #             "email": "testing@omni.com",
+    #             "password": "test123",
+    #             "address": "Fake St 123",
+    #         },
+    #         format="multipart"
+    #     )
+    #     self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+    #
+    # def test_api_client_creation_with_login(self):
+    #     response = self.client.post(
+    #         "/api/v1/store/client/",
+    #         {
+    #             "full_name": "Test Client",
+    #             "username": "testing",
+    #             "email": "testing@omni.com",
+    #             "password": "test123",
+    #             "address": "Fake St 123",
+    #         },
+    #         format="multipart"
+    #     )
+    #     self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
+    #     self.assertContains(
+    #         json.loads(response.content),
+    #         {
+    #             "full_name": "Test Client",
+    #             "username": "testing",
+    #             "email": "testing@omni.com",
+    #             "address": "Fake St 123",
+    #         }
+    #     )

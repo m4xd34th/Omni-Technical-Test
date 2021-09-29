@@ -14,5 +14,8 @@ black==21.9b0
 isort==5.9.3
 coverage==5.5
 pylint==2.11.1
+celery==5.1.2
+redis==3.5.3
+
 
 

@@ -53,6 +53,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "rest_framework.authtoken",
 ]
 
 LOCAL_APPS = [
@@ -171,6 +172,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.SessionAuthentication",
+        "store.authentication.BearerAuthentication",
     ),
     "DEFAULT_PAGINATION_CLASS": "commons.rest_framework.pagination.FullPageNumberPagination10",
 }
@@ -184,3 +186,20 @@ if getenv("BROWSABLE_API_RENDERER", default=False, coalesce=bool):
 
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
+
+# Email Configuration
+EMAIL_PORT = 1025
+EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+# CORS_REPLACE_HTTPS_REFERER      = True
+# HOST_SCHEME                     = "https://"
+# SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT             = True
+# SESSION_COOKIE_SECURE           = True
+# CSRF_COOKIE_SECURE              = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
+# SECURE_HSTS_SECONDS             = 1000000
+# SECURE_FRAME_DENY               = True
+# SECURE_REDIRECT_EXEMPT = ["actualizacion", "creacion", "normalizacion"]

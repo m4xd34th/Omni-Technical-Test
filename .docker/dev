@@ -33,7 +33,11 @@ up|run|server|runserver)
   python manage.py runserver 0.0.0.0:8000
 ;;
 celery)
-  celery -A $APP worker -Q $QUEUES
+  APP="technical_test"
+  QUEUES="celery"
+  LOG_LEVEL="INFO"
+
+  celery -A $APP worker -Q $QUEUES -l $LOG_LEVEL -P threads
 ;;
 test)
   pytest "$@" --flake8 --isort --black --junitxml=/dev/shm/test-results/pytest.xml

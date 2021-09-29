@@ -89,9 +89,6 @@ class Login(ObtainAuthToken):
         )
 
 
-login = Login.as_view()
-
-
 @method_decorator(csrf_exempt, name="dispatch")
 class RefreshToken(APIView):
     def post(self, request, *args, **kwargs):
@@ -129,7 +126,9 @@ class RefreshToken(APIView):
 @method_decorator(csrf_exempt, name="dispatch")
 class Logout(APIView):
     def get(self, request, *args, **kwargs):
+        print(request)
         _, token = request.META["HTTP_AUTHORIZATION"].split(" ")
+        print(token)
         try:
             token_obj = Token.objects.get(key=token)
             user = Client.objects.get(id=token_obj.user_id)

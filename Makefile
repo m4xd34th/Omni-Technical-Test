@@ -36,7 +36,7 @@ fromscratch: reset pull up
 
 .PHONY: bash
 bash: ## drops you into a running container
-	@docker exec -it -e RUNTYPE=bash $$(docker ps|grep technical_test_backend) /entrypoint.sh || true
+	@docker exec -it -e RUNTYPE=bash $$(docker ps | grep technical_test_backend|awk '{ print $$1 }') /entrypoint.sh || true
 
 .PHONY: rootbash
 rootbash: ## drops you into a running container as root
